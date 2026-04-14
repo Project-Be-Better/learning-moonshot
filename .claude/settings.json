@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:aiverify-foundation.github.io)",
+      "Bash(docker info:*)",
+      "Bash(docker compose:*)"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+services:
+  moonshot:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      # Persist moonshot data between container restarts
+      - moonshot-data:/app/moonshot-data
+    environment:
+      - PYTHONUNBUFFERED=1
+
+volumes:
+  moonshot-data:
