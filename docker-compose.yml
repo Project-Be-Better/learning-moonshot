@@ -1,13 +1,33 @@
 services:
+
+  # Full deployment: web UI (port 3000) + API (port 5000)
+  # Run with: docker compose --profile full up --build
   moonshot:
-    build: .
+    profiles: [full]
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      # Persist moonshot data between container restarts
       - moonshot-data:/app/moonshot-data
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # API-only deployment: web API on port 5000, no UI
+  # Run with: docker compose --profile api up --build
+  moonshot-api:
+    profiles: [api]
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "5000:5000"
+    volumes:
+      - moonshot-api-data:/app/moonshot-data
     environment:
       - PYTHONUNBUFFERED=1
 
 volumes:
   moonshot-data:
+  moonshot-api-data:

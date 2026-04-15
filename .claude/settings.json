@@ -3,7 +3,9 @@
     "allow": [
       "WebFetch(domain:aiverify-foundation.github.io)",
       "Bash(docker info:*)",
-      "Bash(docker compose:*)"
+      "Bash(docker compose:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(docker run *)"
     ]
   }
 }

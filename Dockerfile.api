@@ -1,0 +1,22 @@
+FROM python:3.11-slim
+
+# No Node.js needed for API-only mode
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    build-essential \
+    python3-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install only the web-api extras (no UI dependencies)
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install "aiverify-moonshot[web-api]"
+
+# Download only moonshot-data (no moonshot-ui needed)
+RUN python -m moonshot -i moonshot-data
+
+EXPOSE 5000
+
+CMD ["python", "-m", "moonshot", "web-api"]
