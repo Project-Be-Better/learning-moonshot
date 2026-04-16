@@ -17,6 +17,12 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # Download only moonshot-data (no moonshot-ui needed)
 RUN python -m moonshot -i moonshot-data
 
+# Patch moonshot to read host/port from os.environ so Docker env vars work.
+# The default dotenv_values() approach silently ignores Docker env vars.
+RUN sed -i \
+    's|run_kwargs\["host"\] = dotenv_values().get("HOST_ADDRESS", "127.0.0.1")|run_kwargs["host"] = os.environ.get("HOST_ADDRESS", dotenv_values().get("HOST_ADDRESS", "0.0.0.0"))|' \
+    /usr/local/lib/python3.11/site-packages/moonshot/integrations/web_api/__main__.py
+
 EXPOSE 5000
 
 CMD ["python", "-m", "moonshot", "web-api"]

@@ -5,7 +5,9 @@
       "Bash(docker info:*)",
       "Bash(docker compose:*)",
       "WebFetch(domain:github.com)",
-      "Bash(docker run *)"
+      "Bash(docker run *)",
+      "Bash(docker exec *)",
+      "Bash(xargs grep *)"
     ]
   }
 }
